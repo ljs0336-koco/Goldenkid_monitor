@@ -1,13 +1,9 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
 import Login from './pages/Login';
 import AdminDashboard from './pages/AdminDashboard';
 import TeacherDashboard from './pages/TeacherDashboard';
+import TeacherHome from './pages/TeacherHome';
 
 // Protected Route wrapper
 const ProtectedRoute = ({ children, allowedRole }: { children: React.ReactNode, allowedRole?: 'admin' | 'teacher' }) => {
@@ -31,6 +27,22 @@ export default function App() {
         <Route element={<Layout />}>
           <Route 
             path="/" 
+            element={
+              <ProtectedRoute allowedRole="teacher">
+                <TeacherHome />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/chat" 
+            element={
+              <ProtectedRoute allowedRole="teacher">
+                <TeacherDashboard />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/chat/:deviceId" 
             element={
               <ProtectedRoute allowedRole="teacher">
                 <TeacherDashboard />
