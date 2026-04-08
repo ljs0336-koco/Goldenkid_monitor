@@ -1,5 +1,5 @@
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
-import { LayoutDashboard, MonitorSmartphone, Settings, LogOut } from 'lucide-react';
+import { LayoutDashboard, MonitorSmartphone, Home, LogOut } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 export default function Layout() {
@@ -22,7 +22,8 @@ export default function Layout() {
         { name: '대시보드', icon: LayoutDashboard, path: '/admin' },
       ]
     : [
-        { name: '기기 목록', icon: MonitorSmartphone, path: '/' },
+        { name: '홈 (기기 목록)', icon: Home, path: '/' },
+        { name: '채팅 모니터링', icon: MonitorSmartphone, path: '/chat' },
       ];
 
   return (
@@ -37,7 +38,11 @@ export default function Layout() {
         <nav className="flex-1 px-4 space-y-2 mt-4">
           {navItems.map((item) => {
             const Icon = item.icon;
-            const isActive = location.pathname === item.path;
+            // 활성화 상태 체크 (채팅 모니터링은 /chat 으로 시작하면 모두 활성화)
+            const isActive = item.path === '/' 
+              ? location.pathname === '/' 
+              : location.pathname.startsWith(item.path);
+              
             return (
               <button
                 key={item.name}
