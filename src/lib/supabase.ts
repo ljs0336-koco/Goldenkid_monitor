@@ -9,6 +9,8 @@ export type User = {
   id: string;
   username: string;
   role: 'admin' | 'teacher';
+  description?: string | null;
+  created_at?: string;
 };
 
 export type Device = {
