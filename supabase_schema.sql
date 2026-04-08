@@ -7,6 +7,7 @@ create table public.chatbot_users (
   username text unique not null,
   password text not null,
   role text not null default 'teacher' check (role in ('admin', 'teacher')),
+  description text, -- Added description field for admin memos
   created_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 
